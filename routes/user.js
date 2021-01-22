@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require("express");
 
 const router = express.Router();
 
-router.get('/user', (req, res) => {
+router.get("/user", (req, res) => {
     res.json({
-        data: "Hey you hit user API endpoint"
-    })
+        data: "hey you hit user API endpoint",
+    });
 });
 
 module.exports = router;

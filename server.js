@@ -26,7 +26,7 @@ mongoose
 // middleware
 app.use(morgan("dev"));
 app.use(bodyParser.json({limit: "2mb"}));
-
+app.use(cors());
 
 // routes middleware
 // app.use('/api', authRoutes);
