@@ -21,7 +21,7 @@ exports.listAll = async (req, res) => {
     let products = await Product.find({})
         .limit(parseInt(req.params.count))
         .populate("category")
-        .populate("subs")
+        .populate("sub")
         .sort([["createdAt", "desc"]])
         .exec();
     res.json(products);
@@ -42,7 +42,7 @@ exports.remove = async (req, res) => {
 exports.read = async (req, res) => {
     const product = await Product.findOne({ slug: req.params.slug })
         .populate("category")
-        .populate("subs")
+        .populate("sub")
         .exec();
     res.json(product);
 };
@@ -68,45 +68,45 @@ exports.update = async (req, res) => {
 };
 
 // WITHOUT PAGINATION
-// exports.list = async (req, res) => {
-//   try {
-//     // createdAt/updatedAt, desc/asc, 3
-//     const { sort, order, limit } = req.body;
-//     const products = await Product.find({})
-//       .populate("category")
-//       .populate("sub")
-//       .sort([[sort, order]])
-//       .limit(limit)
-//       .exec();
+exports.list = async (req, res) => {
+  try {
+    // createdAt/updatedAt, desc/asc, 3
+    const { sort, order, limit } = req.body;
+    const products = await Product.find({})
+      .populate("category")
+      .populate("sub")
+      .sort([[sort, order]])
+      .limit(limit)
+      .exec();
 
-//     res.json(products);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 // WITH PAGINATION
-exports.list = async (req, res) => {
-    // console.table(req.body);
-    try {
-        // createdAt/updatedAt, desc/asc, 3
-        const { sort, order, page } = req.body;
-        const currentPage = page || 1;
-        const perPage = 3; // 3
-
-        const products = await Product.find({})
-            .skip((currentPage - 1) * perPage)
-            .populate("category")
-            .populate("subs")
-            .sort([[sort, order]])
-            .limit(perPage)
-            .exec();
-
-        res.json(products);
-    } catch (err) {
-        console.log(err);
-    }
-};
+// exports.list = async (req, res) => {
+//     // console.table(req.body);
+//     try {
+//         // createdAt/updatedAt, desc/asc, 3
+//         const { sort, order, page } = req.body;
+//         const currentPage = page || 1;
+//         const perPage = 4; // 3
+//
+//         const products = await Product.find({})
+//             .skip((currentPage - 1) * perPage)
+//             .populate("category")
+//             .populate("subs")
+//             .sort([[sort, order]])
+//             .limit(perPage)
+//             .exec();
+//
+//         res.json(products);
+//     } catch (err) {
+//         console.log(err);
+//     }
+// };
 
 exports.productsCount = async (req, res) => {
     let total = await Product.find({}).estimatedDocumentCount().exec();
@@ -158,7 +158,7 @@ exports.listRelated = async (req, res) => {
     })
         .limit(3)
         .populate("category")
-        .populate("subs")
+        .populate("sub")
         .populate("postedBy")
         .exec();
 
@@ -170,7 +170,7 @@ exports.listRelated = async (req, res) => {
 const handleQuery = async (req, res, query) => {
     const products = await Product.find({ $text: { $search: query } })
         .populate("category", "_id name")
-        .populate("subs", "_id name")
+        .populate("sub", "_id name")
         .populate("postedBy", "_id name")
         .exec();
 
@@ -186,7 +186,7 @@ const handlePrice = async (req, res, price) => {
             },
         })
             .populate("category", "_id name")
-            .populate("subs", "_id name")
+            .populate("sub", "_id name")
             .populate("postedBy", "_id name")
             .exec();
 
@@ -200,7 +200,7 @@ const handleCategory = async (req, res, category) => {
     try {
         let products = await Product.find({ category })
             .populate("category", "_id name")
-            .populate("subs", "_id name")
+            .populate("sub", "_id name")
             .populate("postedBy", "_id name")
             .exec();
 
@@ -228,7 +228,7 @@ const handleStar = (req, res, stars) => {
             if (err) console.log("AGGREGATE ERROR", err);
             Product.find({ _id: aggregates })
                 .populate("category", "_id name")
-                .populate("subs", "_id name")
+                .populate("sub", "_id name")
                 .populate("postedBy", "_id name")
                 .exec((err, products) => {
                     if (err) console.log("PRODUCT AGGREGATE ERROR", err);
@@ -240,7 +240,7 @@ const handleStar = (req, res, stars) => {
 const handleSub = async (req, res, sub) => {
     const products = await Product.find({ subs: sub })
         .populate("category", "_id name")
-        .populate("subs", "_id name")
+        .populate("sub", "_id name")
         .populate("postedBy", "_id name")
         .exec();
 
@@ -250,7 +250,7 @@ const handleSub = async (req, res, sub) => {
 const handleShipping = async (req, res, shipping) => {
     const products = await Product.find({ shipping })
         .populate("category", "_id name")
-        .populate("subs", "_id name")
+        .populate("sub", "_id name")
         .populate("postedBy", "_id name")
         .exec();
 
@@ -260,7 +260,7 @@ const handleShipping = async (req, res, shipping) => {
 const handleColor = async (req, res, color) => {
     const products = await Product.find({ color })
         .populate("category", "_id name")
-        .populate("subs", "_id name")
+        .populate("sub", "_id name")
         .populate("postedBy", "_id name")
         .exec();
 
@@ -270,7 +270,7 @@ const handleColor = async (req, res, color) => {
 const handleBrand = async (req, res, brand) => {
     const products = await Product.find({ brand })
         .populate("category", "_id name")
-        .populate("subs", "_id name")
+        .populate("sub", "_id name")
         .populate("postedBy", "_id name")
         .exec();
 
