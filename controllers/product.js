@@ -210,6 +210,7 @@ const handleCategory = async (req, res, category) => {
     }
 };
 
+
 const handleStar = (req, res, stars) => {
     Product.aggregate([
         {
