@@ -156,7 +156,7 @@ exports.listRelated = async (req, res) => {
         _id: { $ne: product._id },
         category: product.category,
     })
-        .limit(3)
+        .limit(4)
         .populate("category")
         .populate("sub")
         .populate("postedBy")
