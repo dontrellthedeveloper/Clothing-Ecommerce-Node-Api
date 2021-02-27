@@ -8,13 +8,15 @@ const { authCheck } = require("../middlewares/auth");
 const {
     userCart,
     getUserCart,
-    emptyCart
+    emptyCart,
+    saveAddress
 } = require("../controllers/user");
 
 
 router.post("/user/cart", authCheck, userCart);
 router.get("/user/cart", authCheck, getUserCart); // get cart
 router.delete("/user/cart", authCheck, emptyCart); // empty cart
+router.post("/user/address", authCheck, saveAddress);
 
 // router.get("/user", (req, res) => {
 //     res.json({
