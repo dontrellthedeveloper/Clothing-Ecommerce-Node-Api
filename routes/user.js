@@ -20,6 +20,9 @@ router.delete("/user/cart", authCheck, emptyCart); // empty cart
 router.post("/user/address", authCheck, saveAddress);
 
 
+router.post("/user/order", authCheck, createOrder); // stripe
+
+
 // coupon
 router.post("/user/cart/coupon", authCheck, applyCouponToUserCart);
 
