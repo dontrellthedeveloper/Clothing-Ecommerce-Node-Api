@@ -11,7 +11,8 @@ const {
     emptyCart,
     saveAddress,
     applyCouponToUserCart,
-    createOrder
+    createOrder,
+    orders
 } = require("../controllers/user");
 
 
@@ -22,6 +23,7 @@ router.post("/user/address", authCheck, saveAddress);
 
 
 router.post("/user/order", authCheck, createOrder); // stripe
+router.get("/user/orders", authCheck, orders);
 
 
 // coupon
