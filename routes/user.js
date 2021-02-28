@@ -10,7 +10,8 @@ const {
     getUserCart,
     emptyCart,
     saveAddress,
-    applyCouponToUserCart
+    applyCouponToUserCart,
+    createOrder
 } = require("../controllers/user");
 
 
